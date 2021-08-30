@@ -1,9 +1,9 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: webapp-nginx
+  name: lb-webapp-nginx
   labels:
-    name: webapp-nginx
+    name: lb-webapp-nginx
 spec:
   host: webapp.johnbaws.com
   path: "/"
