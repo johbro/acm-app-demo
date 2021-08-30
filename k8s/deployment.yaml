@@ -17,9 +17,6 @@ spec:
       containers:
       - image: quay.io/jobrowni/webapp-nginx:latest
         name: webapp-nginx
-        env:
-          - name: CLUSTERENV
-            value: ACM-DEPLOYED
         ports:
         - containerPort: 8080
           name: http-server
