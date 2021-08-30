@@ -5,6 +5,7 @@ metadata:
   labels:
     name: webapp-nginx
 spec:
+  host: webapp.johnbaws.com
   path: "/"
   to:
     kind: Service
