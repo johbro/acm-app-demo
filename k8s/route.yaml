@@ -1,0 +1,11 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: webapp-nginx
+  labels:
+    name: webapp-nginx
+spec:
+  path: "/"
+  to:
+    kind: Service
+    name: webapp-nginx
