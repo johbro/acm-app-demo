@@ -1,4 +1,4 @@
-FROM centos/nginx-112-centos7
+FROM registry.access.redhat.com/ubi8/nginx-118
 
 MAINTAINER "John Browning" "johnb@redhat.com"
 

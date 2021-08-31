@@ -15,7 +15,7 @@ spec:
         name: webapp-nginx
     spec:
       containers:
-      - image: quay.io/jobrowni/webapp-nginx:latest
+      - image: quay.io/jobrowni/ubi8-nginx:latest
         name: webapp-nginx
         ports:
         - containerPort: 8080
