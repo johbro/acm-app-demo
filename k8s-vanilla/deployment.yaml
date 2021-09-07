@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: webapp-nginx
+  name: webapp-nginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: webapp-nginx
+  template:
+    metadata:
+      labels:
+        name: webapp-nginx
+    spec:
+      containers:
+      - image: quay.io/jobrowni/ubi8-nginx:latest
+        name: webapp-nginx
+        ports:
+        - containerPort: 8080
+          name: http-server
