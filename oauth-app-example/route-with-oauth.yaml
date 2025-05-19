@@ -1,0 +1,20 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+  labels:
+    name: mywebapp
+  name: mywebapp-authenticated
+  namespace: mywebapp
+spec:
+  host: mywebapp-authenticated.apps.cluster-zfkbl.zfkbl.sandbox2610.opentlc.com
+  port:
+    targetPort: proxy
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: reencrypt
+  to:
+    kind: Service
+    name: mywebapp
+    weight: 100
+  wildcardPolicy: None

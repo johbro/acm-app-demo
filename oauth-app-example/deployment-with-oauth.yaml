@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: mywebapp
+  name: mywebapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: mywebapp
+  template:
+    metadata:
+      labels:
+        name: mywebapp
+    spec:
+      containers:
+      - image: quay.io/jobrowni/ubi8-nginx:latest
+        name: mywebapp
+        ports:
+        - containerPort: 8080
+          name: http-server
+
+      - image: quay.io/openshift/origin-oauth-proxy:4.18
+        name: oauth-proxy
+        args:
+          - -provider=openshift
+          - -https-address=:8888
+          - -http-address=
+          - -email-domain=*
+          - -upstream=http://localhost:8080
+          - -tls-cert=/etc/tls/private/tls.crt
+          - -tls-key=/etc/tls/private/tls.key
+          - -cookie-secret-file=/etc/proxy/secrets/session_secret
+          - -openshift-service-account=mywebapp
+          - -openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+          - -skip-auth-regex=^/metrics
+        ports:
+          - name: oauth-proxy
+            containerPort: 8888    
+            protocol: TCP
+        volumeMounts:
+          - mountPath: /etc/tls/private
+            name: secret-mywebapp-tls
+          - mountPath: /etc/proxy/secrets
+            name: secret-mywebapp-proxy
+      serviceAccountName: mywebapp
+      volumes:
+        - name: secret-mywebapp-tls
+          secret:
+            defaultMode: 420
+            secretName: mywebapp-tls
+        - name: secret-mywebapp-proxy
+          secret:
+            defaultMode: 420
+            secretName: mywebapp-proxy
